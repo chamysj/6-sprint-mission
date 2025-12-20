@@ -6,7 +6,7 @@ from orders;
 -- 2. `orders`테이블에서 `id` 가 `423`인 주문을 조회하세요.
 select * 
 from orders 
-where id = 423
+where id = 423;
 -- 3. `orders` 테이블에서 총 주문 건수를 `total_orders`라는 이름으로 구하세요.
 select count(*) as total_orders 
 from orders;
@@ -26,7 +26,7 @@ order by date desc,time desc limit 10 offset (5 - 1) * 10;
 select *
 from orders
 where id < 42 
-order by date desc,time desc
+order by id desc
 limit 10;
 -- 8. `orders` 테이블에서 2025년 3월에 주문된 내역만 조회하세요.
 select *
@@ -102,11 +102,13 @@ order by date desc;
             bbq_ckn_m     | bbq_ckn     | M    | 16.75 |            956
         ```
 */
-select pizzas.* , sum(quantity) as total_quantity
+
+select pizzas.*, total_quantitys.total_quantity
 from pizzas 
-left join order_details on pizzas.id = order_details.pizza_id
-group by pizzas.id
-order by count(order_details.order_id) desc, sum(quantity) desc
+join (select pizza_id, sum(quantity) as total_quantity 
+  from order_details group by pizza_id) as total_quantitys 
+on total_quantitys.pizza_id = pizzas.id
+order by total_quantitys.total_quantity desc
 limit 10;
 
 /*
@@ -123,13 +125,15 @@ limit 10;
         2025-03-05 |           64 |  2350.650005340576
         ```
 */
-select date, count(distinct order_details.order_id) as total_orders, 
+select date, count(distinct orders.id) as total_orders, 
 sum(order_details.quantity * pizzas.price) as total_amount
 from orders 
 left join order_details on orders.id = order_details.order_id
 left join pizzas on order_details.pizza_id = pizzas.id
+where date >= '2025-03-01' and date < '2025-04-01'
 group by date
-having date >= '2025-03-01' and date < '2025-04-01';
+order by date;
+
 
 /*
     3. `order`의 `id`가 78에 해당하는 주문 내역들을 조회합니다. 
