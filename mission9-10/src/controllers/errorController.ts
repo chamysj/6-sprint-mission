@@ -1,0 +1,46 @@
+import { StructError } from 'superstruct';
+import {
+  NotFoundError,
+  BadRequestError,
+  ForbiddenError,
+  UnauthorizedError,
+} from '../lib/errors/customErrors';
+import { Prisma } from '@prisma/client';
+import { Request, Response, NextFunction } from 'express';
+import { isSyntaxJsonError } from '../lib/errors/errorUtils';
+
+//404 처리 미들웨어
+export function defaultNotFoundHandler(req: Request, res: Response, next: NextFunction) {
+  return res.status(404).send({ message: '존재하지 않습니다' });
+}
+//전역 에러 처리 미들웨어(400,401,403,404,500)
+export function globalErrorHandler(err: unknown, req: Request, res: Response, next: NextFunction) {
+  if (err instanceof StructError || err instanceof BadRequestError) {
+    return res.status(400).send({ message: '잘못된 요청입니다' });
+  }
+  if (isSyntaxJsonError(err)) {
+    return res.status(400).send({ message: '잘못된 요청입니다' });
+  }
+  if (err instanceof UnauthorizedError) {
+    return res.status(401).json({ message: err.message });
+  }
+  if (err instanceof ForbiddenError) {
+    return res.status(403).json({ message: err.message });
+  }
+  if (err instanceof NotFoundError) {
+    return res.status(404).send({ message: err.message });
+  }
+  //프리즈마 코드 에러, 그 외 known 에러 500처리
+  if (err instanceof Prisma.PrismaClientKnownRequestError) {
+    if (err.code === 'P2025') {
+      return res.status(404).json({ message: '존재하지 않습니다' });
+    }
+    if (err.code === 'P2002') {
+      return res.status(400).json({ message: '잘못된 요청입니다' });
+    }
+    return res.status(500).json({ message: '데이터 처리 중 오류가 발생했습니다' });
+  }
+
+  console.error(err);
+  return res.status(500).send({ message: '데이터 처리 중 오류가 발생했습니다' });
+}
