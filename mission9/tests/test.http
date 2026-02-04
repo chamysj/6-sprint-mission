@@ -1,5 +1,5 @@
-### Article 목록 조회하기(좋아요 포함)
-GET http://localhost:3000/articles/?page=1&pageSize=3&orderBy=recent
+### Article 목록 조회하기(좋아요 포함) 
+GET http://localhost:3000/articles/?page=1&pageSize=3&orderBy=recent&keyword=이것은
 Accept: application/json
 
 ### 새로운 Article 만들기
