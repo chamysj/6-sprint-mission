@@ -1,7 +1,7 @@
 import request from 'supertest';
 import app from '../src/app';
 import { prisma } from '../src/lib/prismaClient';
-import { cleanDb, disconnectDb } from './utils.ts/cleanDb';
+import { cleanDb, disconnectDb } from './utils/cleanDb';
 
 jest.mock('uuid', () => ({
   v4: () => 'test-uuid',
@@ -154,9 +154,7 @@ describe('인증이 필요한 상품 API 통합 테스트', () => {
         },
       });
 
-      const res = await agent
-        .post(`/products/${product.id}/comments`)
-        .send({ content: 'hello' });
+      const res = await agent.post(`/products/${product.id}/comments`).send({ content: 'hello' });
 
       expect(res.status).toBe(201);
       expect(res.body).toHaveProperty('id');
@@ -217,7 +215,9 @@ describe('인증이 필요한 상품 API 통합 테스트', () => {
         ],
       });
 
-      const res = await agent.get('/products/me').query({ page: 1, pageSize: 10, orderBy: 'recent' });
+      const res = await agent
+        .get('/products/me')
+        .query({ page: 1, pageSize: 10, orderBy: 'recent' });
       expect(res.status).toBe(200);
       expect(res.body.totalCount).toBe(2);
       expect(res.body.list).toHaveLength(2);

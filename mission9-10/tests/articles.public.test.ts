@@ -1,8 +1,8 @@
 import request from 'supertest';
 import app from '../src/app';
 import { prisma } from '../src/lib/prismaClient';
-import { createSeedUser } from './utils.ts/createUser';
-import { cleanDb, disconnectDb } from './utils.ts/cleanDb';
+import { createSeedUser } from './utils/createUser';
+import { cleanDb, disconnectDb } from './utils/cleanDb';
 
 jest.mock('uuid', () => ({
   v4: () => 'test-uuid',
