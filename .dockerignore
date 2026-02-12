@@ -1,0 +1,14 @@
+**/.DS_Store
+.git
+.github
+node_modules
+mission2
+mission3
+mission4
+mission5
+mission8
+mission9-10-11/node_modules
+mission9-10-11/dist
+mission9-10-11/coverage
+mission9-10-11/.env*
+mission9-10-11/.git
