@@ -2,22 +2,32 @@ name: Deploy to EC2
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   deploy:
     runs-on: self-hosted
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+    defaults:
+      run:
+        working-directory: mission9-10-11
 
-      - name: Deploy
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Migrate
+        run: npm run prisma:migrate:deploy
+
+      - name: Restart app
         run: |
-          cd mission9-10-11
-          npm ci
-          npm run build
-          npm run prisma:migrate:deploy
-          pm2 reload panda-market
-          echo "Deployment successful!"
+          pm2 reload panda-market || pm2 start dist/src/main.js --name panda-market
+          pm2 save
+
+      - name: Done
+        run: echo "Deployment successful!"
