@@ -1,0 +1,46 @@
+{
+  "name": "sprint-mission",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "author": "",
+  "main": "src/main.js",
+  "scripts": {
+    "dev": "nodemon --watch src --exec ts-node src/main.ts",
+    "build": "tsc",
+    "start": "node dist/main.js"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^10.1.0",
+    "@prisma/client": "^6.19.0",
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^5.2.1",
+    "express-list-endpoints": "^7.1.1",
+    "is-uuid": "^1.0.2",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.2",
+    "superstruct": "^2.0.2",
+    "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/cookie-parser": "^1.4.10",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/multer": "^2.0.0",
+    "@types/node": "^24.10.1",
+    "nodemon": "^3.1.11",
+    "prisma": "^6.19.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "prisma": {
+    "schema": "prisma/schema.prisma",
+    "seed": "prisma/seed.js"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "name": "sprint-mission",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "main.js",
+  "scripts": {
+    "dev": "nodemon ./src/main.js",
+    "start": "node ./src/main.js"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^10.1.0",
+    "@prisma/client": "^6.19.0",
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "express-list-endpoints": "^7.1.1",
+    "is-uuid": "^1.0.2",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.2",
+    "superstruct": "^1.0.3",
+    "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10",
+    "prisma": "^6.19.0"
+  },
+  "prisma": {
+    "schema": "prisma/schema.prisma",
+    "seed": "prisma/seed.js"
+  }
+}

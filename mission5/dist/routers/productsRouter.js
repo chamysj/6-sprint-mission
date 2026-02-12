@@ -1,0 +1,23 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const withAsync_1 = require("../lib/withAsync");
+const productsController_1 = require("../controllers/productsController");
+const authenticate_1 = __importDefault(require("../middlewares/authenticate"));
+const usersController_1 = require("../controllers/usersController");
+const productsRouter = express_1.default.Router();
+productsRouter.get('/me', (0, authenticate_1.default)(), (0, withAsync_1.withAsync)(usersController_1.getMyProductList));
+productsRouter.get('/me/likes', (0, authenticate_1.default)(), (0, withAsync_1.withAsync)(usersController_1.getMyLikedProducts));
+productsRouter.get('/', (0, authenticate_1.default)({ optional: true }), (0, withAsync_1.withAsync)(productsController_1.getProductList));
+productsRouter.post('/', (0, authenticate_1.default)(), (0, withAsync_1.withAsync)(productsController_1.createProduct));
+productsRouter.get('/:id', (0, authenticate_1.default)({ optional: true }), (0, withAsync_1.withAsync)(productsController_1.getProduct));
+productsRouter.patch('/:id', (0, authenticate_1.default)(), (0, withAsync_1.withAsync)(productsController_1.updateProduct));
+productsRouter.delete('/:id', (0, authenticate_1.default)(), (0, withAsync_1.withAsync)(productsController_1.deleteProduct));
+productsRouter.post('/:id/comments', (0, authenticate_1.default)(), (0, withAsync_1.withAsync)(productsController_1.createComment));
+productsRouter.get('/:id/comments', (0, withAsync_1.withAsync)(productsController_1.getCommentList));
+productsRouter.post('/:id/like', (0, authenticate_1.default)(), (0, withAsync_1.withAsync)(productsController_1.likeProduct));
+productsRouter.delete('/:id/like', (0, authenticate_1.default)(), (0, withAsync_1.withAsync)(productsController_1.unlikeProduct));
+exports.default = productsRouter;

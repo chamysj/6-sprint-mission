@@ -1,0 +1,199 @@
+### Article 목록 조회하기(좋아요 포함)
+GET http://localhost:3000/articles/?page=1&pageSize=3&orderBy=recent
+Accept: application/json
+
+### 새로운 Article 만들기
+POST http://localhost:3000/articles
+Content-Type: application/json
+
+{
+    "title": "새로운 Article2 제목입니다.",
+    "content": "이것은 새로운 Article의 내용입니다.",
+    "image": "https://example.com/image.jpg"
+}
+
+### 특정 ID의 Article 가져오기(좋아요 포함)
+GET http://localhost:3000/articles/4
+Accept: application/json
+
+### Article 업데이트하기
+PATCH http://localhost:3000/articles/9
+Content-Type: application/json
+
+{
+    "title": "Article 2 업데이트",
+    "content": "이것은 업데이트된 내용입니다."
+}
+
+### Article 삭제하기
+DELETE http://localhost:3000/articles/9
+Accept: application/json
+
+### Article에 Comment 달기 테스트
+POST http://localhost:3000/articles/2/comments
+Content-Type: application/json
+
+{
+    "content": "이것은 Article에 대한 테스트 Comment입니다."
+}
+
+### Article의 Comment 가져오기 테스트
+GET http://localhost:3000/articles/2/comments?limit=200
+Accept: application/json
+
+### Comment 업데이트 테스트
+PATCH http://localhost:3000/comments/6
+Content-Type: application/json
+
+{
+    "content": "이것은 업데이트된 테스트 Comment입니다."
+}
+
+### Comment 삭제 테스트
+DELETE http://localhost:3000/comments/7
+Accept: application/json
+
+### 새로운 Product 만들기 테스트
+POST http://localhost:3000/products
+Content-Type: application/json
+
+{
+    "name": "2025년 최신형 세탁기",
+    "description": "신상품입니다.",
+    "price": 2000000,
+    "tags": ["세탁기"],
+    "images": ["image1.png", "image2.png"]
+}
+
+### 모든 Product 가져오기 테스트
+GET http://localhost:3000/products/?page=1&pageSize=10&orderBy=recent&
+Accept: application/json
+
+### 특정 Product 조회 (좋아요 포함)
+GET http://localhost:3000/products/4
+Accept: application/json
+
+### Product 업데이트하기 테스트
+PATCH http://localhost:3000/products/56
+Content-Type: application/json
+
+{
+    "name": "업데이트된 테스트 Product",
+    "description": "이것은 업데이트된 테스트 Product 설명입니다.",
+    "price": 15000,
+    "tags": ["업데이트", "Product"],
+    "images": ["업데이트된_image1.png"]
+}
+
+### Product 삭제하기 테스트
+DELETE http://localhost:3000/products/60
+Accept: application/json
+
+### Product에 Comment 달기 테스트
+POST http://localhost:3000/products/4/comments
+Content-Type: application/json
+
+{
+    "content": "이것은 Product에 대한 테스트 Comment입니다."
+}
+
+### Product의 Comment 가져오기 테스트
+GET http://localhost:3000/products/4/comments
+Accept: application/json
+
+
+### Comment 업데이트하기 테스트
+PATCH http://localhost:3000/comments/7
+Content-Type: application/json
+
+{
+    "content": "이것은 업데이트된 테스트 Comment입니다."
+}
+
+### Comment 삭제하기 테스트
+DELETE http://localhost:3000/comments/4
+Accept: application/json
+
+### 이미지 업로드 테스트
+POST http://localhost:3000/images/upload
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="image"; filename="test.png"
+Content-Type: image/png
+
+< ./test.png
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### 사용자 등록 테스트
+POST http://localhost:3000/users/register
+Content-Type: application/json  
+
+{
+    "email": "alstn6@gmail.com",
+    "password": "password123",
+    "nickname": "민수bingsu4"
+}
+
+### 사용자 로그인 테스트
+POST http://localhost:3000/users/login
+Content-Type: application/json  
+
+{
+    "email": "chlalstn@gmail.com",
+    "password": "password123"
+}
+
+### 사용자 로그아웃 테스트
+POST http://localhost:3000/users/logout
+
+### 사용자 정보 가져오기 테스트(최근 등록 상품 5개 포함, 최근 좋아요 상품 5개 포함)
+GET http://localhost:3000/users/me
+Accept: application/json
+
+### 사용자 정보 업데이트 테스트
+PATCH http://localhost:3000/users/me
+Content-Type: application/json 
+
+{
+    "email": "chlalstn@gmail.com",
+    "nickname": "수정한닉네임",
+    "image": "https://example.com/newprofile.jpg"
+}
+
+### 비밀번호 변경 테스트
+PATCH http://localhost:3000/users/me/password
+Content-Type: application/json
+
+{
+    "currentPassword": "password123",
+    "newPassword": "newpassword123"
+}
+
+###refresh token 테스트
+POST http://localhost:3000/users/refresh
+
+###상품like 테스트
+POST http://localhost:3000/products/35/like
+Accept: application/json
+
+###상품unlike 테스트 , 취소가 됐음에도 불구하고 다시 시도하는 경우 에러메세지(존재하지 않습니다) 변경 고려
+DELETE http://localhost:3000/products/35/like
+Accept: application/json
+
+### Article like 테스트
+POST http://localhost:3000/articles/8/like
+Accept: application/json
+
+### Article unlike 테스트
+DELETE http://localhost:3000/articles/8/like
+Accept: application/json
+
+### 내가 좋아요한 product 목록 가져오기 테스트(상품이 꽤 많이 있을 경우 페이징 처리)
+GET http://localhost:3000/products/me/likes/?page=1&pageSize=10&orderBy=recent
+Accept: application/json
+
+### 내가 등록한 상품 목록 가져오기 테스트, &keword=세탁기(상품이 꽤 많이 있을 경우 페이징 처리, 키워드 검색 가능)
+GET http://localhost:3000/products/me/?page=1&pageSize=10&orderBy=recent
+Accept: application/json
+
