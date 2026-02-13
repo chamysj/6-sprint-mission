@@ -6,7 +6,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      NODE_ENV: production
+      NODE_ENV: development
       PORT: 3000
       UPLOAD_PROVIDER: local
       DATABASE_URL: postgresql://postgres:postgres@db:5432/mission_db?schema=public
