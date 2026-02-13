@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install deps
-        run: npm ci
+        run: npm ci --include=dev --no-audit --no-fund
 
       - name: Build
         run: npm run build
